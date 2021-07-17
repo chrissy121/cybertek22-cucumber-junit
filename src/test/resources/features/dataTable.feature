@@ -1,5 +1,6 @@
 Feature: Examples of Cucumber data table implementations
 
+  @wip
   Scenario: Something happens
     #Given user does something
     Then user should see below words displayed
@@ -9,4 +10,5 @@ Feature: Examples of Cucumber data table implementations
       | Strawberry |
       | Mango      |
       | Tomato     |
-    #Control+Alt+L - tegshlex
+
+   #Control+Alt+L - tegshlex
