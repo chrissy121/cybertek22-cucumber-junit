@@ -1,6 +1,6 @@
 package com.cybertek.step_definitions;
 
-import com.cybertek.pages.WikiSearchPage;
+import com.cybertek.pages.GoogleSearchPage;
 import com.cybertek.utilities.ConfigurationReader;
 import com.cybertek.utilities.Driver;
 import io.cucumber.java.en.Given;
@@ -10,7 +10,7 @@ import org.junit.Assert;
 
 public class Wiki_StepDefinitions {
 
-    WikiSearchPage wikiSearchPage = new WikiSearchPage();
+    GoogleSearchPage.WikiSearchPage wikiSearchPage = new GoogleSearchPage.WikiSearchPage();
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
@@ -51,9 +51,24 @@ public class Wiki_StepDefinitions {
 
         String expectedHeader = arg0;
         String actualHeader = wikiSearchPage.mainHeader.getText();
-
         Assert.assertEquals(expectedHeader, actualHeader);
 
+    }
+
+    @Then("User sees Steve Jobs is in the image header")
+    public void userSeesSteveJobsIsInTheImageHeader() {
+        String expectedImageHeader = "Steve Jobs";
+        String actualImageHeader = wikiSearchPage.imageHeader.getText();
+        Assert.assertEquals(expectedImageHeader, actualImageHeader);
+
+    }
+
+    @Then("User sees {string} is in the image header")
+    public void userSeesIsInTheImageHeader(String arg0) {
+        String expectedImageHeader = arg0;
+        String actualImageHeader = wikiSearchPage.imageHeader.getText();
+
+        Assert.assertTrue(actualImageHeader.equals(expectedImageHeader));
 
     }
 }

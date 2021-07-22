@@ -5,10 +5,10 @@ Feature: Wikipedia search functionality
 
 
   Scenario: Wikipedia Search Functionality Title Verification
-  Given User is on Wikipedia home page
-  When User types "Elon Musk" in the wiki search box
-  And User clicks wiki search button
-  Then User sees "Elon Musk" is in the wiki title
+    Given User is on Wikipedia home page
+    When User types "Elon Musk" in the wiki search box
+    And User clicks wiki search button
+    Then User sees "Elon Musk" is in the wiki title
 
   Scenario:  Wikipedia Search Functionality Header Verification
     Given User is on Wikipedia home page
@@ -16,6 +16,14 @@ Feature: Wikipedia search functionality
     And User clicks wiki search button
     Then User sees "Steve Jobs" is in the main header
 
+
+  Scenario:   Wikipedia Search Functionality Image Header Verification
+  Given User is on Wikipedia home page
+  When User types "Steve Jobs" in the wiki search box
+  And User clicks wiki search button
+  Then User sees "Steve Jobs" is in the image header
+
+@ScenarioOutline:
   Scenario Outline:  Wikipedia Search Functionality Header Verification
     Given User is on Wikipedia home page
     When User types "<searchValue>" in the wiki search box
@@ -24,3 +32,13 @@ Feature: Wikipedia search functionality
     Then User sees "<expectedTitle>" is in the wiki title
 
     Examples: Search terms we are going to use in this template is as below
+      | searchValue     | expectedMainHeader | expectedTitle   |  |
+      | Steve Jobs      | Steve Jobs         | Steve Jobs      |  |
+      | Albert Einstein | Albert Einstein    | Albert Einstein |  |
+      | Nikola Tesla    | Nikola Tesla       | Nikola Tesla    |  |
+      | Conor McGregor  | Conor McGregor     | Conor McGregor  |  |
+      | Marie Curie     | Marie Curie        | Marie Curie     |  |
+      | Natalie Dormer  | Natalie Dormer     | Natalie Dormer  |  |
+
+
+

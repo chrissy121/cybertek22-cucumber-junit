@@ -1,6 +1,6 @@
 Feature: Examples of Cucumber data table implementations
 
-  @wip
+
   Scenario: Something happens
     #Given user does something
     Then user should see below words displayed
@@ -11,4 +11,10 @@ Feature: Examples of Cucumber data table implementations
       | Mango      |
       | Tomato     |
 
-   #Control+Alt+L - tegshlex
+  @wip
+  Scenario: Library login example using data table
+    Given user is on the login page of library app
+    When user enters username and password as below
+      | username | librarian@13library.com |
+      | password | 9rf6assD                |
+    Then user should see title is something

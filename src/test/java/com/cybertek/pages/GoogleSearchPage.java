@@ -12,4 +12,23 @@ public class GoogleSearchPage {
 
     @FindBy(name = "q")
     public WebElement searchBar;
+
+    public static class WikiSearchPage {
+
+        public WikiSearchPage() {
+            PageFactory.initElements(Driver.getDriver(), this);
+        }
+
+        @FindBy(id = "searchInput")
+        public WebElement searchBox;
+
+        @FindBy(xpath = "//button[@type='submit']")
+        public WebElement searchBtn;
+
+        @FindBy(id = "firstHeading")
+        public WebElement mainHeader;
+
+        @FindBy(xpath = "//table[@class='infobox biography vcard']//tr[1]")
+        public WebElement imageHeader;
+    }
 }
