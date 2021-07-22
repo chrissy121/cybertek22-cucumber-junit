@@ -1,6 +1,6 @@
 Feature: Login parameterization
 
-
+  @wip
   Scenario: Login parameterization
     Given User is logged SmartBear account
     When user can be order page

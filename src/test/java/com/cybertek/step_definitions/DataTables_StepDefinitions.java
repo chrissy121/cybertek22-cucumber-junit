@@ -1,11 +1,14 @@
 package com.cybertek.step_definitions;
 
 import com.cybertek.pages.LibraryLoginPage;
+import com.cybertek.utilities.BrowserUtils;
 import com.cybertek.utilities.ConfigurationReader;
 import com.cybertek.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +35,14 @@ public class DataTables_StepDefinitions {
 
     }
     @Then("user should see title is something")
-    public void user_should_see_title_is_something() {
-        System.out.println("title verification");
+    public void user_should_see_title_is_something() throws InterruptedException {
+        BrowserUtils.sleep(2);
+        String actualTitle = Driver.getDriver().getTitle();
+        String expectedTitle = "Library";
+
+        BrowserUtils.sleep(2);
+        Assert.assertEquals(actualTitle, expectedTitle);
+
     }
     @Then("user should see below words displayed")
     public void user_should_see_below_words_displayed(List<String> listOfFruits) {
