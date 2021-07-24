@@ -1,8 +1,26 @@
 package com.cybertek.utilities;
 
-public class BrowserUtils {
+import org.openqa.selenium.WebElement;
 
-    //copy whatever you have from urdaas
+import java.util.ArrayList;
+import java.util.List;
+
+public class BrowserUtils {
+    /*
+        This method accepts a List<WebElements> and returns List<String>
+        @param webElementList
+     */
+
+    public static List<String> getElementsText(List<WebElement> webElementList){
+
+        //Create placeholder List<String>
+        List<String> actualAsString = new ArrayList<>();
+        for (WebElement each : webElementList) {
+            actualAsString.add(each.getText());
+        }
+        return actualAsString;
+    }
+
  /*
     Method that will accept int
     Wait for given second duration

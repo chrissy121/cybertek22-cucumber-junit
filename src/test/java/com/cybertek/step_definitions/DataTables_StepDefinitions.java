@@ -1,5 +1,6 @@
 package com.cybertek.step_definitions;
 
+import com.cybertek.pages.DropdownsPage;
 import com.cybertek.pages.LibraryLoginPage;
 import com.cybertek.utilities.BrowserUtils;
 import com.cybertek.utilities.ConfigurationReader;
@@ -8,14 +9,48 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class DataTables_StepDefinitions {
 
     LibraryLoginPage loginPage = new LibraryLoginPage();
+    DropdownsPage dropdownsPage = new DropdownsPage();
+
+    @Given("User is on the dropdowns page of practice tool")
+    public void user_is_on_the_dropdowns_page_of_practice_tool() {
+        Driver.getDriver().get("http://practice.cybertekschool.com/dropdown");
+    }
+    @Then("User should see below info in month dropdown")
+    public void user_should_see_below_info_in_month_dropdown(List<String> expectedList) {
+
+        //1- Get the
+        Select monthDropdown = new Select(dropdownsPage.month);
+
+        //2- Get all the options
+        List<WebElement> actualMonthAsWebElement = monthDropdown.getOptions();
+
+        Assert.assertEquals(expectedList, BrowserUtils.getElementsText(actualMonthAsWebElement));
+
+
+//        //3- Convert the actualMonths from List<webElement> to List<String>
+//        List<String> actualMonthAsString = new ArrayList<>();
+//
+//        for (WebElement each : actualMonthAsWebElement) {
+//            actualMonthAsString.add(each.getText());
+//
+//        }
+//
+//        Assert.assertEquals(expectedList, actualMonthAsString);
+
+
+    }
+
 
     @Given("user is on the login page of library app")
         public void user_is_on_the_login_page_of_library_app() {

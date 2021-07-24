@@ -1,5 +1,6 @@
 package com.cybertek.step_definitions;
 
+import com.cybertek.pages.SmartBearOrderPage;
 import com.cybertek.pages.SmartBear_LoginPage;
 import com.cybertek.pages.WebOrdersPage;
 import com.cybertek.utilities.BrowserUtils;
@@ -8,78 +9,101 @@ import com.cybertek.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class SmartBear_Stepdefinition {
-   SmartBear_LoginPage smartBear_loginPage = new SmartBear_LoginPage();
-   WebOrdersPage webOrdersPage = new WebOrdersPage();
 
-    @Given("User is logged SmartBear account")
-    public void user_is_logged_smart_bear_account() {
-        String url = ConfigurationReader.getProperty("smartBearUrl");
+    SmartBear_LoginPage loginPage = new SmartBear_LoginPage();
+    SmartBearOrderPage orderPage = new SmartBearOrderPage();
+
+    @Given("User is on the SmartBear login page")
+    public void user_is_on_the_smart_bear_login_page() {
+       String url = ConfigurationReader.getProperty("smartbearUrl");
         Driver.getDriver().get(url);
-        smartBear_loginPage.userName.sendKeys("Tester");
-        smartBear_loginPage.password.sendKeys("test");
-        smartBear_loginPage.loginBtn.click();
-        smartBear_loginPage.orderMenu.click();
+
     }
-    @When("user can be order page")
-    public void user_can_be_order_page() throws InterruptedException {
-        Select select= new Select(webOrdersPage.product);
+    @When("user enters the given credentials")
+    public void user_enters_the_given_credentials() {
+        loginPage.userName.sendKeys("Tester");
+        loginPage.password.sendKeys("test");
+
+    }
+    @When("user click the login button")
+    public void user_click_the_login_button() {
+        loginPage.loginBtn.click();
+
+    }
+    @Then("user should see the dashboard page")
+    public void user_should_see_the_dashboard_page() {
+        String expectedTitle = "Web Orders";
+        String actualTitle = Driver.getDriver().getTitle();
+
+        Assert.assertEquals("As a expected is not matching actual", expectedTitle, actualTitle);
+
+
+    }
+
+    @Given("User is on the SmartBear order page")
+    public void user_is_on_the_smart_bear_order_page() {
+        orderPage.orderMenu.click();
+    }
+    @When("User selects {string} from product dropdown")
+    public void user_selects_from_product_dropdown(String string) {
+        Select select = new Select(orderPage.product);
         select.selectByValue("FamilyAlbum");
-        webOrdersPage.quantity.clear();
-//        webOrdersPage.quantity.sendKeys("4");
+    }
+    @When("User enters {int} to quantity")
+    public void user_enters_to_quantity(Integer qtyNum) {
+
+        orderPage.qty.sendKeys(Keys.BACK_SPACE, qtyNum + "");
+    }
+    @When("User enters {string} to costumer name")
+    public void user_enters_to_costumer_name(String customerName) {
+        orderPage.customerName.sendKeys(customerName);
+    }
+    @When("User enters {string} to street")
+    public void user_enters_to_street(String streetName) {
+        orderPage.street.sendKeys(streetName);
 
     }
-    @Then("user selects FamilyAlbum from product dropdown")
-    public void user_selects_family_album_from_product_dropdown() {
-
+    @When("User enters {string} to city")
+    public void user_enters_to_city(String cityName) {
+        orderPage.city.sendKeys(cityName);
     }
-    @Then("User enters {int} to quantity")
-    public void user_enters_to_quantity(Integer int1) {
-
+    @When("User enters {string} to state")
+    public void user_enters_to_state(String stateName) {
+        orderPage.state.sendKeys(stateName);
     }
-    @Then("User enters John Wick to costumer name")
-    public void user_enters_john_wick_to_costumer_name() {
-
+    @When("User enters {string}")
+    public void user_enters(String zipCode) {
+        orderPage.zip.sendKeys(zipCode);
     }
-    @Then("User enters Kinzie Ave to street")
-    public void user_enters_kinzie_ave_to_street() {
-
+    @When("User selects {string} as card type")
+    public void user_selects_as_card_type(String visa) {
+        orderPage.visa.click();
     }
-    @Then("User enters Chicago to city")
-    public void user_enters_chicago_to_city() {
-
+    @When("User enters {string} to card number")
+    public void user_enters_to_card_number(String cardNumber) {
+        orderPage.cardNum.sendKeys(cardNumber);
     }
-    @Then("User enters IL to state")
-    public void user_enters_il_to_state() {
-
+    @When("User enters {string} to expiration date")
+    public void user_enters_to_expiration_date(String expireDate) {
+        orderPage.expireDate.sendKeys(expireDate);
     }
-    @Then("User enters {int}")
-    public void user_enters(Integer int1) {
-
-    }
-    @Then("User selects Visa as card type")
-    public void user_selects_visa_as_card_type() {
-
-    }
-    @Then("User enters {int} to card number")
-    public void user_enters_to_card_number(Integer int1) {
-
-    }
-    @Then("User enters {int}\\/{int} to expiration date")
-    public void user_enters_to_expiration_date(Integer int1, Integer int2) {
-
-    }
-    @Then("User clicks process button")
+    @When("User clicks process button")
     public void user_clicks_process_button() {
+        orderPage.processBtn.click();
+    }
+    @Then("User verifies {string} is in the list")
+    public void userVerifiesIsInTheList(String expectedName) {
+        orderPage.listAllOrders.click();
+
+        String actualName  = orderPage.nameView.getText();
+
+        Assert.assertEquals("As expected is not matching actual", expectedName, actualName);
 
     }
-    @Then("User verifies JohnWick is in the list")
-    public void user_verifies_john_wick_is_in_the_list() {
-
-    }
-
 }

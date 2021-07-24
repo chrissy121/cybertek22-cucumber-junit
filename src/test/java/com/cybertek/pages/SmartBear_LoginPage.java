@@ -19,8 +19,6 @@ public class SmartBear_LoginPage {
     @FindBy(id ="ctl00_MainContent_login_button")
     public WebElement loginBtn;
 
-    @FindBy(xpath = "//ul[@id='ctl00_menu']/li[3]")
-    public WebElement orderMenu;
 
 
 }

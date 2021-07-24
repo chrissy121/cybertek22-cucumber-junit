@@ -21,6 +21,8 @@ public class Hooks {
     public void tearDownScenario(Scenario scenario) {
 
         //scenario.isFailed()
+        //Take screenshot
+
 
         if(scenario.isFailed()) {
 
