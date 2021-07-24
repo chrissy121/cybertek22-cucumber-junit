@@ -17,13 +17,13 @@ public class Driver {
     we make it static, because we want it to run before everything else,
     and also we will use it in a static method
     */
-    private static WebDriver driver;
+    private static ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
     /*
     Creating re-usable utility method that will return same 'driver' instance everytime we call it.
     */
     public static WebDriver getDriver() {
-        if (driver == null) {
+        if (driverPool.get() == null) {
             /*
             We read our browser type from configuration.properties file using
             .getProperty method we creating in ConfigurationReader class.
@@ -37,24 +37,24 @@ public class Driver {
             switch (browserType) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-                    driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.set(new ChromeDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
                 case  "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
-                    driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.set(new FirefoxDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
             }
         }
         /*
         Same driver instance will be returned every time we call Driver.getDriver();method
          */
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        return driver;
+        driverPool.get().manage().window().maximize();
+        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        return driverPool.get();
 
     }
 
@@ -64,9 +64,9 @@ public class Driver {
      */
 
     public static void closeDriver() {
-        if(driver!=null) {
-            driver.quit();
-            driver = null;
+        if(driverPool.get()!=null) {
+            driverPool.get().quit();
+            driverPool = null;
         }
     }
 

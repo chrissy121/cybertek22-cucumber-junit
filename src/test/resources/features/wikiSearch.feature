@@ -23,7 +23,7 @@ Feature: Wikipedia search functionality
   And User clicks wiki search button
   Then User sees "Steve Jobs" is in the image header
 
-@ScenarioOutline:
+@ScenarioOutline
   Scenario Outline:  Wikipedia Search Functionality Header Verification
     Given User is on Wikipedia home page
     When User types "<searchValue>" in the wiki search box

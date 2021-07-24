@@ -1,12 +1,28 @@
 package com.cybertek.utilities;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BrowserUtils {
-    /*
+
+
+    /*this method accepts String expected title
+    @PARAM ex
+    */
+    public static void assertTitle(String expectedTitle) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
+        wait.until(ExpectedConditions.titleIs(expectedTitle));
+
+        String actualTitle = Driver.getDriver().getTitle();
+        Assert.assertEquals(expectedTitle, actualTitle);
+    }
+
+     /*
         This method accepts a List<WebElements> and returns List<String>
         @param webElementList
      */
