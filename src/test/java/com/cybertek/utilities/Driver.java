@@ -24,31 +24,35 @@ public class Driver {
     */
     public static WebDriver getDriver() {
         if (driverPool.get() == null) {
+
+            synchronized (Driver.class) {
             /*
             We read our browser type from configuration.properties file using
             .getProperty method we creating in ConfigurationReader class.
              */
-            String browserType = ConfigurationReader.getProperty("browser");
+                String browserType = ConfigurationReader.getProperty("browser");
 
             /*
             Depending on the browser type our switch statement will determine
             to open specific type of browser/driver
              */
-            switch (browserType) {
-                case "chrome":
-                    WebDriverManager.chromedriver().setup();
-                    driverPool.set(new ChromeDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                    break;
-                case  "firefox":
-                    WebDriverManager.firefoxdriver().setup();
-                    driverPool.set(new FirefoxDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                    break;
+                switch (browserType) {
+                    case "chrome":
+                        WebDriverManager.chromedriver().setup();
+                        driverPool.set(new ChromeDriver());
+                        driverPool.get().manage().window().maximize();
+                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        break;
+                    case "firefox":
+                        WebDriverManager.firefoxdriver().setup();
+                        driverPool.set(new FirefoxDriver());
+                        driverPool.get().manage().window().maximize();
+                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        break;
+                }
             }
         }
+
         /*
         Same driver instance will be returned every time we call Driver.getDriver();method
          */
@@ -66,7 +70,7 @@ public class Driver {
     public static void closeDriver() {
         if(driverPool.get()!=null) {
             driverPool.get().quit();
-            driverPool = null;
+            driverPool.remove();
         }
     }
 
